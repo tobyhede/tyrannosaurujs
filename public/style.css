@@ -1,0 +1,22 @@
+body .ui-content textarea.ui-input-text {
+	font-family: 'Droid Sans Mono', arial, serif;
+	font-size:0.75em;
+	white-space:pre;
+	height:400px;
+	width:300px;
+	padding:0.25em;
+}
+
+
+.CodeMirror-line-numbers {
+	font-family: 'Droid Sans Mono', arial, serif;
+	font-size:0.75em;
+  margin: .4em;
+  padding: 0;
+  color: #999999;
+}
+
+.landscape body div.ui-page {
+	min-height:600px;
+	height:100%;
+}

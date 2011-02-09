@@ -1,0 +1,402 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Page Title</title> 
+	<link rel="stylesheet" href="./jquery/jquery.mobile-1.0a3.min.css" />	
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="./style.css" />
+	
+	<script type="text/javascript" src="./jquery/jquery.js"></script>
+	<script type="text/javascript" src="./application.js"></script>
+	<script type="text/javascript" src="./jquery/jquery.mobile-1.0a3.min.js"></script>
+	<script type="text/javascript" src="./codemirror/js/codemirror.js"></script>
+</head> 
+<body> 
+
+  	
+<div data-role="page">
+
+	<div data-role="header" class="" role="banner">
+		<h1>JavaScript </h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+		<p>Page content goes here.</p>		
+		
+		<ul data-role="listview" data-inset="true" data-theme="d">
+      <li><a href="#objects" data-transition="slide">Objects</a></li>
+      <li><a href="#functions" data-transition="slide">Functions</a></li>
+      <li><a href="#this" data-transition="slide">this</a></li>
+      <li><a href="#constructors" data-transition="slide">Constructors</a></li>
+    	<li><a href="#prototypes" data-transition="slide">Prototypes</a></li>
+    	<li><a href="#closures" data-transition="slide">Closure</a></li>
+    	<li><a href="#inheritance" data-transition="slide">Inheritance</a></li>
+    	<li><a href="#inheritance_II" data-transition="slide">Inheritance II</a></li>
+    </ul>
+          
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+    <h4>Melbourne JavaScript Meetup February 2011</h4>  
+	</div>
+</div><!-- /page -->
+
+
+<div data-role="page" id="objects">
+
+	<div data-role="header">
+		<h1>Objects</h1>
+	</div>
+
+	<div data-role="content">	
+		<div data-role="fieldcontain">
+    	<textarea cols="40" rows="40" name="objects">
+  //object literals    	  
+  var an_object = {};
+  var tyrannosaurus = { 
+    "kingdom":	"Animalia",
+    "phylum":	"Chordata",
+    "class":	"Reptilia",
+    "superorder":	"Dinosauria",
+    "order":	"Saurischia",
+    "suborder":	"Theropoda",
+    "family":	"Tyrannosauridae",
+    "specimens": ["Sue","Stan","Jane"]
+  };    	 
+
+  //accessing values
+  console.log(tyrannosaurus["kingdom"]);
+  console.log(tyrannosaurus.phylum);
+
+  //updating
+  tyrannosaurus.class = "reptile";
+  tyrannosaurus.genus = "Tyrannosaurus";
+  console.log(tyrannosaurus.class);
+  console.log(tyrannosaurus.genus);
+
+  //passed by reference
+  var x = tyrannosaurus;
+  console.log(x.specimens);
+    	</textarea>
+    </div>        
+    
+    
+	</div>
+
+	<div data-role="footer" data-position="fixed" data-id="exec_footer">
+    <a href="#" class="run" data-role="button" data-icon="gear">Run</a>      
+	</div>
+</div>
+
+
+<div data-role="page" id="functions">
+
+	<div data-role="header">
+		<h1>Functions</h1>
+	</div>
+
+	<div data-role="content">	
+		<div data-role="fieldcontain">
+    	<textarea cols="40" rows="10" name="textarea" id="textarea">
+  //declaration order is not important  	  
+  console.log(grind());
+
+  
+  var chomp = function() {
+    return "chomp";
+  }	     	 
+
+  function grind() {
+    return "grind";
+  }
+
+  //methods
+  var tyrannosaurus = {
+    gnash: function() { 
+      return "gnash"; 
+    }
+  };
+  console.log(tyrannosaurus.gnash());
+
+  //functions are objects
+  var c = chomp;
+    
+  console.log(c);
+  console.log(c());
+  console.log(c.apply());
+    	</textarea>
+    </div>        
+  </div>
+
+	<div data-role="footer" data-position="fixed" data-id="exec_footer">
+    <a href="#" class="run" data-role="button" data-icon="gear">Run</a>      
+	</div>
+</div>
+
+
+<div data-role="page" id="this">
+
+	<div data-role="header">
+		<h1>this</h1>
+	</div>
+
+	<div data-role="content">	
+		<div data-role="fieldcontain">
+    	<textarea cols="40" rows="10" name="textarea" id="textarea">
+  var tyrannosaurus = {
+    name: "Sue",
+    gnash: function() { 
+      return this.name + " gnashes"; 
+    },
+    greet: function(greeting) { 
+      return this.name + " " + greeting; 
+    }    
+  };
+	 
+  console.log(tyrannosaurus.gnash());
+
+  var that = { name: "Jane" };
+  var gnash = tyrannosaurus.gnash;
+  
+  console.log(gnash.apply(that));          
+    
+  // call and apply take different parameters
+  console.log(tyrannosaurus.greet.apply(that,["roars"]));          
+  console.log(tyrannosaurus.greet.call(that, "bellows"));        
+    	</textarea>
+    </div>        
+    
+	</div>
+
+	<div data-role="footer" data-position="fixed" data-id="exec_footer">
+    <a href="#" class="run" data-role="button" data-icon="gear">Run</a>      
+	</div>
+</div>
+
+
+
+
+<div data-role="page" id="constructors">
+
+	<div data-role="header">
+		<h1>Constructors</h1>
+	</div>
+
+	<div data-role="content">	
+		<div data-role="fieldcontain">
+    	<textarea cols="40" rows="10" name="textarea" id="textarea">
+  var Tyrannosaurus = function(name) {
+    this.name = name;
+  }
+    	
+  // the new operator creates a new object that inherits from the constructor's prototype, and then calls the constructor, binding the new object. 
+  var sue = new Tyrannosaurus("Sue");
+  
+  //function
+  console.log(Tyrannosaurus);
+  
+  //object
+  console.log(sue);    	  
+  
+  //normal function call
+  var stan = Tyrannosaurus("Stan");  
+  console.log(stan);
+    	</textarea>
+    </div>        
+       
+	</div>
+
+	<div data-role="footer" data-position="fixed" data-id="exec_footer">
+    <a href="#" class="run" data-role="button" data-icon="gear">Run</a>      
+	</div>
+</div>
+
+
+
+
+<div data-role="page" id="prototypes">
+
+	<div data-role="header">
+		<h1>Prototypes</h1>
+	</div>
+
+	<div data-role="content">	
+		<div data-role="fieldcontain">
+    	<textarea cols="40" rows="10" name="textarea" id="textarea">     	 
+  var Tyrannosaurus = function(name) {
+    this.name = name;
+  }
+
+  var sue = new Tyrannosaurus("Sue");
+
+  //function
+  console.log(Tyrannosaurus);
+  console.log(sue);    	
+
+  Tyrannosaurus.prototype.greet = function(greeting) { 
+    return this.name + " " + greeting; 
+  };
+
+  console.log(sue.greet("roars"));
+
+  //extend built-in objects
+  String.prototype.includes = function(s) {
+    return this.indexOf(s) != -1;
+  }
+
+  var result = "Tyrannosaurus".includes("Tyran");
+  console.log( result );  
+  
+  var result = "".includes.call("Triceratops", "Tyran");
+  console.log( result );              
+    	</textarea>
+    </div>        
+    
+	</div>
+
+	<div data-role="footer" data-position="fixed" data-id="exec_footer">
+    <a href="#" class="run" data-role="button" data-icon="gear">Run</a>      
+	</div>
+</div>
+
+
+
+<div data-role="page" id="closures">
+
+	<div data-role="header">
+		<h1>Closures</h1>
+	</div>
+
+	<div data-role="content">	
+		<div data-role="fieldcontain">
+    	<textarea cols="40" rows="10" name="textarea" id="textarea">
+  //functions are like, magic. and stuff  
+  function Dinosaur() {
+    var _name = "Triceratops";
+    
+    var greet = function(greeting) {      
+        return this.name + " " + greeting;
+    }
+    
+    return {
+      "name": _name,
+      "hello": greet
+    }
+  }
+
+  // function
+  console.log(Dinosaur);
+  
+  // returned object
+  var triceratops = Dinosaur();  
+  console.log(triceratops);  
+  
+  //method
+  console.log( triceratops.hello("says hello") );  
+
+  //hidden
+  console.log( triceratops.greet("chuckles") );    	 
+    	</textarea>
+    </div>        
+    
+	</div>
+
+	<div data-role="footer" data-position="fixed" data-id="exec_footer">
+    <a href="#" class="run" data-role="button" data-icon="gear">Run</a>      
+	</div>
+</div>
+
+
+
+<div data-role="page" id="inheritance">
+
+	<div data-role="header">
+		<h1>Inheritance</h1>
+	</div>
+
+	<div data-role="content">	
+		<div data-role="fieldcontain">
+    	<textarea cols="40" rows="10" name="textarea" id="textarea">
+  var Dinosaur = function(name) {
+    this.name = name;
+  }  
+  Dinosaur.prototype.chomp = function() {
+    return "chomp";
+  }
+  
+  var sue = new Dinosaur("Sue");  
+  console.log(sue.chomp());
+    
+  var Triceratops = function(name) {
+    this.name = name;
+  }
+  
+  Triceratops.prototype =  new Dinosaur();  
+  Triceratops.prototype.charge = function() {
+    return "charge!"
+  }
+  
+  var bau = new Triceratops("Baudrillard");  
+  console.log(bau.chomp());
+  console.log(bau.charge());
+  
+  console.log(sue.charge());  
+    	</textarea>
+    </div>        
+    
+	</div>
+
+	<div data-role="footer" data-position="fixed" data-id="exec_footer">
+    <a href="#" class="run" data-role="button" data-icon="gear">Run</a>      
+	</div>
+</div>
+
+
+<div data-role="page" id="inheritance_II">
+
+	<div data-role="header">
+		<h1>Inheritance II</h1>
+	</div>
+
+	<div data-role="content">	
+		<div data-role="fieldcontain">
+    	<textarea cols="40" rows="10" name="textarea" id="textarea">
+  var Dinosaur = function(name) {
+    return {
+      name: name,
+      chomp: function() {
+        return "chomp";
+      }
+    }
+  }  
+
+  var sue = Dinosaur("Sue");  
+  console.log(sue.chomp());
+    
+  var Triceratops = function(name) {
+    var _that = Dinosaur(name);
+    _that.charge = function() {
+      return "charge!"
+    }    
+    return _that;
+  }
+  
+  var bau = Triceratops("Baudrillard");  
+  console.log(bau.chomp());
+  console.log(bau.charge());
+  
+  console.log(sue.charge());  
+    	</textarea>
+    </div>        
+    
+	</div>
+
+	<div data-role="footer" data-position="fixed" data-id="exec_footer">
+    <a href="#" class="run" data-role="button" data-icon="gear">Run</a>      
+	</div>
+</div>
+
+
+
+</body>
+</html>
