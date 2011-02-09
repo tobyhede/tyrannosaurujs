@@ -5,6 +5,7 @@ body .ui-content textarea.ui-input-text {
 	height:400px;
 	width:300px;
 	padding:0.25em;
+	display:none;
 }
 
 
